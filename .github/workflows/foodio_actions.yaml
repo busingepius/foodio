@@ -3,16 +3,16 @@ on:
   push:
     branches:
       - main
-        master
+      - master
   
   pull_request:
     branches:
       - main
-        master
+      - master
 
 jobs: 
   foodio_actions:
-    runs-on: ubuntu-altest 
+    runs-on: ubuntu-latest 
 
     steps: 
       - name: Checkout repository 
@@ -20,7 +20,8 @@ jobs:
 
       - name: Set up Flutter 
         uses: subosito/flutter-action@v2
-        with: flutter-version: "3.24.3"
+        with: 
+          flutter-version: "3.24.3"
 
       - name: Change directory to Flutter project 
         working-directory: ./fooderlich 
