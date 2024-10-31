@@ -5,7 +5,7 @@ on:
       - main
         master
   
-  pull:
+  pull_request:
     branches:
       - main
         master
