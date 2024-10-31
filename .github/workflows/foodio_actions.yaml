@@ -1,0 +1,35 @@
+name: Flutter Actions
+on:
+  push:
+    branches:
+      - main
+        master
+  
+  pull_request:
+    branches:
+      - main
+        master
+
+jobs: 
+  foodio_actions:
+    runs-on: ubuntu-altest 
+
+    steps: 
+      - name: Checkout repository 
+        uses: actions/checkout@v3 
+
+      - name: Set up Flutter 
+        uses: subosito/flutter-action@v2
+        with: flutter-version: "3.24.3"
+
+      - name: Change directory to Flutter project 
+        working-directory: ./fooderlich 
+        run: echo "Changed working to my flutter app directory"
+
+      - name: Install dependencies 
+        working-directory: ./fooderlich 
+        run: flutter pub get 
+
+      - name: Run Flutter tests 
+        working-directory: ./fooderlich 
+        run: flutter test 
