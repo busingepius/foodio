@@ -65,6 +65,26 @@ class MockFooderlichService {
       throw Exception("failed to get friends feeds");
     }
   }
+
+// Get the sample recipe json to display in ui
+  Future<List<SimpleRecipe>> getRecipes() async {
+    try {
+      final dataString =
+          await _loadAsset('assets/sample_data/sample_recipes.json');
+
+      final http.Response response = http.Response(dataString, 200);
+
+      if (response.statusCode != 200) {
+        throw Exception('No data received');
+      }
+
+      final json = jsonDecode(response.body);
+
+      return json.map<SimpleRecipe>((v) => SimpleRecipe.fromJson(v)).toList();
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }
 
 // Loads sample json data from file system

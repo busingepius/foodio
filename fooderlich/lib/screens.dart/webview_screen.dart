@@ -36,17 +36,22 @@ class _WebViewScreenState extends State<WebViewScreen> {
           },
         ),
       )
-      ..loadRequest(Uri.parse('https://www.raywenderlich.com/'));
+      ..loadRequest(Uri.parse('https://www.qixem.com/'));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('raywenderlich.com'),
+        title: const Text('qixem.com'),
       ),
-      body: WebViewWidget(
-        controller: controller,
+      body: Stack(
+        children: [
+          WebViewWidget(controller: controller),
+          // NB: Don't use brackets
+          if (loadingPercentage < 100)
+            LinearProgressIndicator(value: loadingPercentage / 100.0),
+        ],
       ),
     );
   }

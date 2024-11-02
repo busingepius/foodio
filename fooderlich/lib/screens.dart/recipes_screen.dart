@@ -18,7 +18,7 @@ class RecipesScreen extends StatelessWidget {
             return RecipesGridView(recipes: snapshot.data ?? []);
           } else {
             return const Center(
-              child: const CircularProgressIndicator(),
+              child: CircularProgressIndicator(),
             );
           }
         });
