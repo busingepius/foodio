@@ -3,9 +3,8 @@ import 'package:fooderlich/models/models.dart';
 import 'package:provider/provider.dart';
 
 import 'fooderlich_theme.dart';
-import 'screens.dart/screens.dart';
 
-// TODO: Import app_router
+import 'navigation/app_router.dart';
 
 void main() {
   runApp(const Fooderlich());
@@ -21,10 +20,15 @@ class Fooderlich extends StatefulWidget {
 class _FooderlichState extends State<Fooderlich> {
   final _groceryManager = GroceryManager();
   final _profileManager = ProfileManager();
-  // TODO: Create AppStateManager
+  final _appStateManager = AppStateManager();
   // TODO: Define AppRouter
 
-  // TODO: Initialize app router
+  late final _appRouter = AppRouter(
+    // widget.appStateManager,
+    _appStateManager,
+    _profileManager,
+    _groceryManager,
+  );
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -49,11 +53,13 @@ class _FooderlichState extends State<Fooderlich> {
           } else {
             theme = FooderlichTheme.light();
           }
-          return MaterialApp(
+          final router = _appRouter.router;
+          return MaterialApp.router(
             theme: theme,
             title: 'Fooderlich',
-            // TODO: Replace with Router widget
-            home: const SplashScreen(),
+            routerDelegate: router.routerDelegate,
+            routeInformationParser: router.routeInformationParser,
+            routeInformationProvider: router.routeInformationProvider,
           );
         },
       ),

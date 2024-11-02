@@ -9,7 +9,7 @@ class GroceryItemScreen extends StatefulWidget {
   final Function(GroceryItem) onCreate;
   final Function(GroceryItem, int) onUpdate;
   final GroceryItem? originalItem;
-  final int index;
+  final int index;        
   final bool isUpdating;
 
   const GroceryItemScreen(
