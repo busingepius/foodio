@@ -1,4 +1,4 @@
-FROM ghcr.io/cirruslabs/flutter:latest
+FROM ghcr.io/cirruslabs/flutter:3.24.3
 #  ghrc means git hub container repository 
 RUN flutter precache --android
 

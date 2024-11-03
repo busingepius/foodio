@@ -42,21 +42,20 @@ class AppRouter {
           body: Center(
             child: Text(state.error.toString()),
           ),
-        ),
+        ),            
       );
     },
-    redirect: (state) {
+    redirect: (context, state) {
       final loggedIn = appStateManager.isLoggedIn;
-      final loggingIn = state.subloc == '/login';
+      final loggingIn = state.name == '/login';
       if (!loggedIn) return loggingIn ? null : '/login';
       final isOnboardingComplete = appStateManager.isOnboardingComplete;
-      final onboarding = state.subloc == '/onboarding';
+      final onboarding = state.name == '/onboarding';
       if (!isOnboardingComplete) {
         return onboarding ? null : '/onboarding';
       }
-      if (loggingIn || onboarding) {
-        return '${FooderlichTab.explore}';
-      }
+      if (loggingIn || onboarding) return '${FooderlichTab.explore}';
+
       return null;
     },
   );

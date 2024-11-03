@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fooderlich/models/models.dart';
-import 'package:provider/provider.dart';
+import "package:provider/provider.dart"; 
 
 import 'fooderlich_theme.dart';
 
@@ -32,7 +32,7 @@ class _FooderlichState extends State<Fooderlich> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
+      providers: [ 
         ChangeNotifierProvider(
           create: (context) => _groceryManager,
         ),
@@ -57,7 +57,7 @@ class _FooderlichState extends State<Fooderlich> {
           return MaterialApp.router(
             theme: theme,
             title: 'Fooderlich',
-            routerDelegate: router.routerDelegate,
+            routerDelegate: router.routerDelegate,      
             routeInformationParser: router.routeInformationParser,
             routeInformationProvider: router.routeInformationProvider,
           );

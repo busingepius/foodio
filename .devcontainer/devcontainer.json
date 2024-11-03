@@ -11,8 +11,10 @@
   "customizations": {
     "vscode": {
       "extensions": [
+        "streetsidesoftware.code-spell-checker",
         "dart-code.flutter",
-        "dart-code.dart"
+        "dart-code.dart-code",
+        "ms-azuretools.vscode-docker"
       ]
     }
   }
