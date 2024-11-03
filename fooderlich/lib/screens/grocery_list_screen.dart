@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../components/components.dart';
 import '../models/models.dart';
@@ -50,8 +51,14 @@ class GroceryListScreen extends StatelessWidget {
                   }
                 },
               ),
-              onTap: () {
-                // TODO: Tap on grocery item
+              onTap: () {                
+                context.goNamed(
+                  'item',
+                  pathParameters: {
+                    'tab':'${FooderlichTab.toBuy}',
+                    'id': '$index',
+                  }
+                );
               },
             ),
           );

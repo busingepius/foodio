@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
@@ -16,13 +17,13 @@ class GroceryItemScreen extends StatefulWidget {
 
   // TODO: GroceryItemScreen MaterialPage Helper
 
-  const GroceryItemScreen(
-      {super.key,
-      required this.onCreate,
-      required this.onUpdate,
-      this.originalItem,
-      this.index = 1})
-      : isUpdating = (originalItem != null);
+  const GroceryItemScreen({
+    super.key,
+    required this.onCreate,
+    required this.onUpdate,
+    this.originalItem,
+    required this.index,
+  }) : isUpdating = (originalItem != null);
   @override
   State<GroceryItemScreen> createState() => _GroceryItemScreenState();
 }
@@ -46,6 +47,7 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
       _importance = originalItem.importance;
       _currentColor = originalItem.color;
       final date = originalItem.date;
+
       _timeOfDay = TimeOfDay(hour: date.hour, minute: date.minute);
       _dueDate = date;
     }
@@ -86,7 +88,6 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
                   _timeOfDay.minute,
                 ),
               );
-
               if (widget.isUpdating) {
                 widget.onUpdate(
                   groceryItem,
@@ -95,6 +96,13 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
               } else {
                 widget.onCreate(groceryItem);
               }
+
+              context.goNamed(
+                'home',
+                pathParameters: {
+                  'tab': '${FooderlichTab.toBuy}',
+                },
+              );
             },
           ),
         ],
@@ -346,6 +354,7 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
       children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.baseline,
+          textBaseline: TextBaseline.alphabetic,
           children: [
             Text(
               'Quantity',

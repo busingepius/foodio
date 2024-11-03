@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fooderlich/components/circle_image.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../models/models.dart';
@@ -8,10 +9,12 @@ class ProfileScreen extends StatefulWidget {
   // TODO: ProfileScreen MaterialPage Helper
 
   final User user;
+  final int currentTab;
 
   const ProfileScreen({
     super.key,
     required this.user,
+    required this.currentTab,
   });
 
   @override
@@ -26,7 +29,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         leading: IconButton(
           icon: const Icon(Icons.close),
           onPressed: () {
-            // TODO: Close ProfileScreen
+            context.goNamed(
+              'home',
+              pathParameters: {
+                'tab': '${widget.currentTab}',
+              },
+            );
           },
         ),
       ),
@@ -50,14 +58,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ListTile(
           title: const Text('View raywenderlich.com'),
           onTap: () {
-            // TODO: Open raywenderlich.com webview
+            context.goNamed(
+              'rw',
+              pathParameters: {
+                'tab': '${widget.currentTab}',
+              },
+            );
           },
         ),
         ListTile(
-            title: const Text('Log out'),
-            onTap: () {
-              // TODO: Logout user
-            }),
+          title: const Text('Log out'),
+          onTap: () {
+            Provider.of<AppStateManager>(context, listen: false).logout();
+          },
+        ),
       ],
     );
   }
@@ -66,6 +80,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Text('Dark Mode'),
           Switch(

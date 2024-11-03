@@ -49,7 +49,6 @@ class _HomeState extends State<Home> {
             'home',
             pathParameters: {'tab': '$index'},
           );
-          
         },
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -75,7 +74,12 @@ class _HomeState extends State<Home> {
       padding: const EdgeInsets.only(right: 16.0),
       child: GestureDetector(
         onTap: () {
-          // TODO: home -> profile
+          context.goNamed(
+            'profile',
+            pathParameters: {
+              'tab': '${widget.currentTab}',
+            },
+          );
         },
         child: const CircleAvatar(
           backgroundColor: Colors.transparent,

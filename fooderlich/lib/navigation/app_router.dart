@@ -49,21 +49,40 @@ class AppRouter {
               name: 'item',
               path: 'item/:id',
               builder: (BuildContext context, GoRouterState state) {
-                final itemId =
-                    int.tryParse(state.pathParameters['id'] ?? '') ?? 0;
-                groceryManager.groceryItemTapped(itemId);
+                final itemId = int.tryParse(state.pathParameters['id'] ?? '');
+                if (itemId != null) groceryManager.groceryItemTapped(itemId);
                 final GroceryItem? item = groceryManager.selectedGroceryItem;
                 return GroceryItemScreen(
                   originalItem: item,
                   onCreate: (GroceryItem item) {
                     groceryManager.addItem(item);
                   },
+                  index: itemId ?? -1,
                   onUpdate: (GroceryItem item, int index) {
                     groceryManager.updateItem(item, index);
                   },
                 );
               }),
-          // TODO: Add Profile Subroute
+          GoRoute(
+            name: 'profile',
+            path: 'profile',
+            builder: (BuildContext context, GoRouterState state) {
+              final tab = int.tryParse(state.pathParameters['tab'] ?? '') ?? 0;
+              return ProfileScreen(
+                user: profileManager.getUser,
+                currentTab: tab,
+              );
+            },
+            routes: [
+              GoRoute(
+                name: 'rw',
+                path: 'rw',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const WebViewScreen();
+                },
+              ),
+            ],
+          ),
         ],
       ),
     ],
