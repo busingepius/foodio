@@ -18,14 +18,15 @@ class AppRouter {
   late final GoRouter router = GoRouter(
     debugLogDiagnostics: true,
     refreshListenable: appStateManager,
-    initialLocation: '/login',
+    initialLocation: '/home',
     routes: <RouteBase>[
       GoRoute(
-          name: 'login',
-          path: '/login',
-          builder: (BuildContext context, GoRouterState state) {
-            return const LoginScreen();
-          }),
+        name: 'login',
+        path: '/login',
+        builder: (BuildContext context, GoRouterState state) {
+          return const LoginScreen();
+        },
+      ),
       GoRoute(
         name: 'onboarding',
         path: '/onboarding',
@@ -33,7 +34,38 @@ class AppRouter {
           return OnboardingScreen();
         },
       ),
-      // TODO: Add Home Route
+      GoRoute(
+        name: 'home',
+        path: '/:tab',
+        builder: (BuildContext context, GoRouterState state) {
+          final tab = int.tryParse(state.pathParameters['tab'] ?? '') ?? 0;
+          return Home(
+            key: state.pageKey,
+            currentTab: tab,
+          );
+        },
+        routes: [
+          GoRoute(
+              name: 'item',
+              path: 'item/:id',
+              builder: (BuildContext context, GoRouterState state) {
+                final itemId =
+                    int.tryParse(state.pathParameters['id'] ?? '') ?? 0;
+                groceryManager.groceryItemTapped(itemId);
+                final GroceryItem? item = groceryManager.selectedGroceryItem;
+                return GroceryItemScreen(
+                  originalItem: item,
+                  onCreate: (GroceryItem item) {
+                    groceryManager.addItem(item);
+                  },
+                  onUpdate: (GroceryItem item, int index) {
+                    groceryManager.updateItem(item, index);
+                  },
+                );
+              }),
+          // TODO: Add Profile Subroute
+        ],
+      ),
     ],
     errorPageBuilder: (BuildContext context, GoRouterState state) {
       return MaterialPage(
@@ -42,19 +74,21 @@ class AppRouter {
           body: Center(
             child: Text(state.error.toString()),
           ),
-        ),            
+        ),
       );
     },
     redirect: (context, state) {
       final loggedIn = appStateManager.isLoggedIn;
-      final loggingIn = state.name == '/login';
+      final loggingIn = state.fullPath == '/login';
       if (!loggedIn) return loggingIn ? null : '/login';
+
       final isOnboardingComplete = appStateManager.isOnboardingComplete;
-      final onboarding = state.name == '/onboarding';
+      final onboarding = state.fullPath == '/onboarding';
       if (!isOnboardingComplete) {
         return onboarding ? null : '/onboarding';
       }
-      if (loggingIn || onboarding) return '${FooderlichTab.explore}';
+
+      if (loggedIn && onboarding) return '/${FooderlichTab.explore}';
 
       return null;
     },

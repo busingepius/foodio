@@ -40,6 +40,13 @@ class AppStateManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  // void onboarded() {
+  //   print('seeee');
+  //    _loggedIn = true;
+  //   _onboardingComplete = true;
+  //   notifyListeners();
+  // }
+
   void goToTab(index) {
     _selectedTab = index;
     notifyListeners();

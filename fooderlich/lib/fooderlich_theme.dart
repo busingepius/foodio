@@ -69,6 +69,7 @@ class FooderlichTheme {
 
   static ThemeData light() {
     return ThemeData(
+      splashFactory: NoSplash.splashFactory,
       brightness: Brightness.light,
       checkboxTheme: CheckboxThemeData(
         fillColor: WidgetStateColor.resolveWith((states) {

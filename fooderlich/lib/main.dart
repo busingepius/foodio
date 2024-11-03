@@ -39,7 +39,9 @@ class _FooderlichState extends State<Fooderlich> {
         ChangeNotifierProvider(
           create: (context) => _profileManager,
         ),
-        // TODO: Add AppStateManager ChangeNotifierProvider
+        ChangeNotifierProvider(
+          create:(context)=>_appStateManager,
+        ),
       ],
       child: Consumer<ProfileManager>(
         builder: (

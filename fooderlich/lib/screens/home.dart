@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fooderlich/models/app_state_manager.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 import 'screens.dart';
 
@@ -18,7 +21,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   static List<Widget> pages = [
     ExploreScreen(),
-    // RecipesScreen(),
+    RecipesScreen(),
     const GroceryScreen(),
   ];
   @override
@@ -41,7 +44,12 @@ class _HomeState extends State<Home> {
         selectedItemColor: Theme.of(context).textSelectionTheme.selectionColor,
         currentIndex: widget.currentTab,
         onTap: (index) {
-          // TODO: Update user's selected tab
+          Provider.of<AppStateManager>(context, listen: false).goToTab(index);
+          context.goNamed(
+            'home',
+            pathParameters: {'tab': '$index'},
+          );
+          
         },
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
