@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
 import '../components/components.dart';
@@ -9,8 +10,10 @@ class GroceryItemScreen extends StatefulWidget {
   final Function(GroceryItem) onCreate;
   final Function(GroceryItem, int) onUpdate;
   final GroceryItem? originalItem;
-  final int index;        
+  final int index;
   final bool isUpdating;
+
+  // TODO: GroceryItemScreen MaterialPage Helper
 
   const GroceryItemScreen(
       {super.key,
@@ -104,14 +107,14 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
         padding: const EdgeInsets.all(16.0),
         child: ListView(
           children: [
-            // buildNameField(),
-            // buildImportanceField(),
-            // buildDateField(context),
-            // buildTimeField(context),
+            buildNameField(),
+            buildImportanceField(),
+            buildDateField(context),
+            buildTimeField(context),
             const SizedBox(height: 10.0),
-            // buildColorPicker(context),
+            buildColorPicker(context),
             const SizedBox(height: 10.0),
-            // buildQuantityField(),
+            buildQuantityField(),
             const SizedBox(height: 16.0),
             GroceryTile(
               item: GroceryItem(
@@ -218,4 +221,41 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
       ],
     );
   }
+
+  Widget buildDateField(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Date',
+              style: GoogleFonts.lato(fontSize: 28.0),
+            ),
+            TextButton(
+              child: const Text('Select'),
+              onPressed: () async {
+                final currentDate = DateTime.now();
+                final selectedDate = await showDatePicker(
+                  context: context,
+                  initialDate: currentDate,
+                  firstDate: currentDate,
+                  lastDate: DateTime(currentDate.year + 5),
+                );
+                setState(() {
+                  if (selectedDate != null) {
+                    _dueDate = selectedDate;
+                  }
+                });
+              },
+            ),
+          ],
+        ),
+        Text(DateFormat('yyyy-MM-dd').format(_dueDate)),
+      ],
+    );
+  }
+
+  
 }
