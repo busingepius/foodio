@@ -20,7 +20,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
         elevation: 0.0,
         title: const Text('Getting Started'),
         leading: GestureDetector(
